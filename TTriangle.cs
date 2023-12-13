@@ -3,7 +3,7 @@ class TTRiangle {
     private double sideB;
     private double sideC;
 
-    private bool isInitialized = false;
+    protected bool isInitialized = false;
 
     public static readonly double EPSILON = 1e-8;
     
@@ -14,11 +14,11 @@ class TTRiangle {
         }
         set { 
             if (value < EPSILON) {
-                throw new ArgumentException("triangle side <A> must be bigger than 0.");
+                throw new Exception("triangle side <A> must be bigger than 0.");
             }
             if (isInitialized) {
                 if (!IsValidTriangle(value, sideB, sideC)) {
-                    throw new ArgumentException($"current lengths of sides <B>, <C> and {value} do not form a valid triangle.");
+                    throw new Exception($"current lengths of sides <B>, <C> and {value} do not form a valid triangle.");
                 }
             }
             sideA = value; 
@@ -32,11 +32,11 @@ class TTRiangle {
         }
         set {
             if (value < EPSILON) {
-                throw new ArgumentException("triangle side <B> must be bigger than 0.");
+                throw new Exception("triangle side <B> must be bigger than 0.");
             }
             if (isInitialized) {
                 if (!IsValidTriangle(SideA, value, sideC)) {
-                    throw new ArgumentException($"current lengths of sides <A>, <C> and {value} do not form a valid triangle.");
+                    throw new Exception($"current lengths of sides <A>, <C> and {value} do not form a valid triangle.");
                 }
             }
             sideB = value; 
@@ -50,18 +50,18 @@ class TTRiangle {
         }
         set { 
             if (value < EPSILON) {
-                throw new ArgumentException("triangle side <B> must be bigger than 0.");
+                throw new Exception("triangle side <B> must be bigger than 0.");
             }
             if (isInitialized) {
                 if (!IsValidTriangle(SideA, SideB, value)) {
-                    throw new ArgumentException($"current lengths of sides <A>, <C> and {value} do not form a valid triangle.");
+                    throw new Exception($"current lengths of sides <A>, <C> and {value} do not form a valid triangle.");
                 }
             }
             sideC = value; 
         }
     }
 
-    private static bool IsValidTriangle(double a, double b, double c) {
+    public static bool IsValidTriangle(double a, double b, double c) {
         if (a < EPSILON || b < EPSILON || c < EPSILON) {
             return false;
         }
@@ -71,7 +71,7 @@ class TTRiangle {
                 
     public TTRiangle(double A, double B, double C) {  
         if (!IsValidTriangle(A, B, C)) {
-            throw new ArgumentException($"Fatal Error: sides {A}, {B}, {C} do not form a valid triangle");
+            throw new Exception($"Fatal Error: sides {A}, {B}, {C} do not form a valid triangle");
         }   
         sideA = A;
         sideB = B;
@@ -100,5 +100,10 @@ class TTRiangle {
     public virtual double GetArea() {
         double halfPerim = 0.5 * GetPerimeter();
         return Math.Sqrt(halfPerim * (halfPerim - SideA) * (halfPerim - SideB) * (halfPerim - SideC));
+    }
+
+    public override string ToString()
+    {
+        return $"Side A = {SideA}\nSide B = {SideB}\nSide C = {SideC}\n ";
     }
 }

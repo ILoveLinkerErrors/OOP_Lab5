@@ -2,23 +2,41 @@ class TEqTriangle : TTRiangle {
 
     public double Side {
         get {
-            return base.SideA;
+            return SideA;
         }
         set {
-            base.SideA = value;
+            SideA = value;
+            SideB = value;
+            SideC = value;
         }
     }
+
+    public TEqTriangle() {
+        base.isInitialized = false;
+        Side = 1;
+    }
     public TEqTriangle(double side) {
-        base.SideA = side;
+        base.isInitialized = false;
+        Side = side;
+    }
+
+    public TEqTriangle(TEqTriangle copy) {
+        base.isInitialized = false;
+        Side = copy.Side;
     }
 
     public override double GetArea()
     {
-        return 0.43301270189 * base.SideA;
+        return 0.43301270189 * SideA;
     }
 
     public override double GetPerimeter()
     {
-        return base.SideA * 3;
+        return SideA * 3;
+    }
+
+    public override string ToString()
+    {
+        return $"Side = {Side}";
     }
 }
